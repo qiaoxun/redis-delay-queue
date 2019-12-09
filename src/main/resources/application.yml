@@ -10,3 +10,8 @@ spring:
         max-active: 32
         max-wait: 100
         min-idle: 4
+
+delay-queue-name: delay_queue
+
+server:
+  port: 8899
