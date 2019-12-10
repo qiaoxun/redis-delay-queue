@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 
-import java.time.LocalDateTime;
-
 @Component
 public class DelayQueueProducer {
 
@@ -16,7 +14,8 @@ public class DelayQueueProducer {
     @Autowired
     private JedisPool jedisPool;
 
-    public void addDataToQueue(int jobId, long endTime) {
+    public void addDataToQueue(int jobId, long timeout) {
+        long endTime = System.currentTimeMillis() + (timeout * 60 * 1000);
         jedisPool.getResource().zadd(delayQueueName, endTime, String.valueOf(jobId));
     }
 

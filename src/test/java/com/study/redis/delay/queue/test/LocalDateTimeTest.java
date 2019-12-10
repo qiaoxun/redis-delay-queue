@@ -14,4 +14,9 @@ public class LocalDateTimeTest {
         System.out.println(LocalDateTime.now().plusMinutes(30).toLocalTime().toNanoOfDay());
     }
 
+    public void test1() {
+        long time = System.currentTimeMillis();
+        System.out.println(time);
+    }
+
 }

@@ -37,8 +37,10 @@ public class TestRedisUsable {
 
     @Test
     public void testRestTemplate1() {
-        Set<String> set = redisTemplate.opsForZSet().range("delay_queue", 0, 10);
-        System.out.println(set.size());
-        System.out.println(set);
+        redisTemplate.opsForZSet().add("test", "zhangsan", 100);
+        Object value = redisTemplate.opsForZSet().range("test", 0, 1);
+        System.out.println(value);
+//        System.out.println(set.size());
+//        System.out.println(set);
     }
 }

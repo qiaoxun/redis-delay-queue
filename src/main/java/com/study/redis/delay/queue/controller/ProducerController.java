@@ -22,14 +22,8 @@ public class ProducerController {
      */
     @GetMapping("addJob")
     public int addJob(@RequestParam int jobId, @RequestParam int timeout) {
-        long endTime = System.currentTimeMillis() + (timeout * 60 * 1000);
-        delayQueueProducer.addDataToQueue(jobId, endTime);
+        delayQueueProducer.addDataToQueue(jobId, timeout);
         return jobId;
-    }
-
-    @GetMapping("test")
-    public String test() {
-        return "test";
     }
 
 }

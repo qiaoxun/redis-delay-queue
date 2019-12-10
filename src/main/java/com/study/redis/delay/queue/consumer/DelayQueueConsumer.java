@@ -16,9 +16,6 @@ public class DelayQueueConsumer {
     @Value("${delay-queue-name}")
     private String delayQueueName;
 
-//    @Autowired
-//    private JedisPool jedisPool;
-
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -29,12 +26,11 @@ public class DelayQueueConsumer {
             public void run() {
                 for(;;) {
                     long currentMilliTime = System.currentTimeMillis();
-                    Set<String> jobIdSet = redisTemplate.opsForZSet().range(delayQueueName, 0, -1);
-//                    Set<String> jobIdSet = redisTemplate.opsForZSet().rangeByScore(delayQueueName, 0, currentMilliTime, 0, 10);
-//            Set<String> jobIdSet = jedisPool.getResource().zrangeByScore(delayQueueName, "0", String.valueOf(currentMilliTime), 0, 10);
+                    Set<Integer> jobIdSet = redisTemplate.opsForZSet().rangeByScore(delayQueueName, 0, currentMilliTime, 0, 10);
                     System.out.println("time: " + currentMilliTime + ", delayQueueName = " + delayQueueName + ", result size = " + jobIdSet.size());
                     jobIdSet.forEach(jobId -> {
-                        System.out.println("job id is " + jobId);
+                        System.out.print("job id is ");
+                        System.out.println(jobId);
                     });
                     try {
                         Thread.sleep(1000);
