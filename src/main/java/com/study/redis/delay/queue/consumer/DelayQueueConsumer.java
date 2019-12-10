@@ -4,16 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.JedisPool;
 
 import javax.annotation.PostConstruct;
 import java.util.Set;
-import java.util.concurrent.locks.LockSupport;
 
 @Component
 public class DelayQueueConsumer {
 
-    @Value("${delay-queue-name}")
+    @Value("${redis.delay-queue-name}")
     private String delayQueueName;
 
     @Autowired

@@ -1,3 +1,6 @@
+server:
+  port: 8899
+
 spring:
   redis:
     host: 127.0.0.1
@@ -11,7 +14,5 @@ spring:
         max-wait: 100
         min-idle: 4
 
-delay-queue-name: delay_queue
-
-server:
-  port: 8899
+redis:
+  delay-queue-name: delay_queue
