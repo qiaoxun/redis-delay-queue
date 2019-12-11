@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DelayQueueProducer {
 
-    @Value("${redis.delay-queue-name}")
+    @Value("${delay-queue.delay-queue-name}")
     private String delayQueueName;
 
     @Autowired

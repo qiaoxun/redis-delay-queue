@@ -14,5 +14,9 @@ spring:
         max-wait: 100
         min-idle: 4
 
-redis:
+delay-queue:
   delay-queue-name: delay_queue
+  job-pool-name: delay_job_pool
+  ready-queue-name: dealy_ready_queue
+
+
