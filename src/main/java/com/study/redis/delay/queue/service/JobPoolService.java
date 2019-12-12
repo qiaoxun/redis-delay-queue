@@ -3,11 +3,8 @@ package com.study.redis.delay.queue.service;
 import com.study.redis.delay.queue.domain.DelayJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class JobPoolService {
@@ -16,27 +13,30 @@ public class JobPoolService {
     private String jobPoolName;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private HashOperations<String, String, Object> hashOperations;
 
     /**
      * push delay job to job pool
      * @param delayJob
      */
     public void pushJobToJobPool(DelayJob delayJob) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("topic", delayJob.getTopic());
-        map.put("id", delayJob.getId());
-        map.put("delay", delayJob.getDelay());
-        map.put("ttl", delayJob.getTtr());
-        map.put("body", delayJob.getBody());
-        redisTemplate.opsForHash().put(jobPoolName, delayJob.getId(), map);
+        hashOperations.put(jobPoolName, delayJob.getId(), delayJob);
+    }
+
+    /**
+     * get delay job by id
+     * @param jobId
+     * @return
+     */
+    public DelayJob getJobById(String jobId) {
+        return (DelayJob) hashOperations.get(jobPoolName, jobId);
     }
 
     /**
      * delete delay job from job pool
-     * @param id
+     * @param jobId
      */
-    public void deleteJobFromJobPool(String id) {
-        redisTemplate.opsForHash().delete(jobPoolName, id);
+    public void deleteJobFromJobPool(String jobId) {
+        hashOperations.delete(jobPoolName, jobId);
     }
 }

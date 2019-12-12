@@ -1,8 +1,7 @@
 package com.study.redis.delay.queue.controller;
 
-import com.study.redis.delay.queue.producer.DelayQueueProducer;
+import com.study.redis.delay.queue.handler.DelayQueueHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DelayQueueController {
 
     @Autowired
-    private DelayQueueProducer delayQueueProducer;
+    private DelayQueueHandler delayQueueHandler;
 
     /**
      * push job to queue
@@ -23,12 +22,22 @@ public class DelayQueueController {
      * @param body Job的内容，供消费者做具体的业务处理，以json格式存储。
      * @return
      */
-    @GetMapping("push")
-    public String addJob(@RequestParam String topic, @RequestParam String id, @RequestParam long delay,
+    @RequestMapping("push")
+    public String push(@RequestParam String topic, @RequestParam String id, @RequestParam long delay,
                          @RequestParam long ttr, @RequestParam String body) {
         // TODO
 //        delayQueueProducer.addDataToQueue(id, timeout);
         return id;
+    }
+
+    /**
+     * get ready job for particular topic
+     * @param topic
+     * @return
+     */
+    @RequestMapping("pop")
+    public String pop(@RequestParam String topic) {
+        return delayQueueHandler.pop(topic).toString();
     }
 
 }
