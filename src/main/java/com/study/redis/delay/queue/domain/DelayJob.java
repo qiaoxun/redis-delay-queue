@@ -2,8 +2,10 @@ package com.study.redis.delay.queue.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class DelayJob {
+public class DelayJob implements Serializable {
     /**
      * Job类型。可以理解成具体的业务名称。
      */

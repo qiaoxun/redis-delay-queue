@@ -1,6 +1,7 @@
 package com.study.redis.delay.queue.service;
 
 import com.study.redis.delay.queue.domain.DelayJob;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+@Slf4j
 @Component
 public class DelayQueueService {
 
@@ -42,10 +44,9 @@ public class DelayQueueService {
      * @param id
      */
     public void deleteJobFromDelayQueue(String id) {
-        System.out.println(id);
-        System.out.println(delayQueueName);
-        long result = zSetOperations.remove(id);
-        System.out.println(result);
+        log.info("[Delete] id = " + id + ", delayQueueName = " + delayQueueName);
+        long result = zSetOperations.remove(delayQueueName, id);
+        log.info("result is " + result);
     }
 
 }

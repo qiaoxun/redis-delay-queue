@@ -30,7 +30,10 @@ public class RedisConfig {
         jackson2JsonRedisSerializer.setObjectMapper(om);
         // 7.设置 value 的转化格式和 key 的转化格式
         template.setValueSerializer(jackson2JsonRedisSerializer);
+//        template.setValueSerializer(stringRedisSerializer);
         template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
     }

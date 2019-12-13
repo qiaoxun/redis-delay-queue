@@ -59,6 +59,7 @@ public class TimerHandler {
                         if (delayTime < currentMilliTime) {
                             // 3.2 push job into ready queue
                             DelayJob delayJob = jobPoolService.getJobById(String.valueOf(typedTuple.getValue()));
+                            log.info("delayJob: " + delayJob);
                             if (delayJob != null) {
                                 readyQueueService.pushJobToReadyQueue(delayJob.getTopic(), delayJob.getId());
                             }

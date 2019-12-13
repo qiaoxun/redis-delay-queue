@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Set;
@@ -14,6 +15,9 @@ public class TestRedisUsable {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private ZSetOperations<String, Object> zSetOperations;
 
 //    @Test
 //    public void test() {
@@ -39,5 +43,12 @@ public class TestRedisUsable {
         System.out.println(value);
 //        System.out.println(set.size());
 //        System.out.println(set);
+    }
+
+    @Test
+    public void test2() {
+//        redisTemplate.opsForZSet().rangeByScoreWithScores("delay_queue", 0, 1000000000, 0, 10);
+//        zSetOperations.getOperations().boundZSetOps()
+        zSetOperations.rangeByScore("delay_queue", 0, 1000000000, 0, 10);
     }
 }
