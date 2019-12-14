@@ -53,4 +53,11 @@ public class DelayQueueController {
         return delayQueueHandler.pop(topic);
     }
 
+    // TODO Delete job
+    @RequestMapping("delete")
+    public Result delete() {
+
+        return null;
+    }
+
 }
